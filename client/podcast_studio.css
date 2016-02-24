@@ -20,15 +20,23 @@ body {
     filter: alpha(opacity=0);
 }
 
+.audioMap {
+	margin : 0 auto;
+	width : 90%;
+}
+
 #uploadFile {
 	position: relative;
 	top : 7px;
 }
 
-#region {
+.region {
 	display : inline-block;
-	margin: 10px;
-    border: 3px solid #73AD21;
-    background-color : red;
+    background-color : blue;
     height : 20px;
+}
+
+.playPause {
+	margin : 10px;
+}
 }

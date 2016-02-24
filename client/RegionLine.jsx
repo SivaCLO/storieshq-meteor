@@ -6,7 +6,9 @@ displayRegions(regions) {
 	return regions.map((region) => {
 		return <Region startTime={region.start} 
 					   endTime={region.end} 
-					   width={region.width} 
+					   width={region.width}
+					   silent={region.silent} 
+					   ws={this.props.ws}
 			   />;
 		});
 },
@@ -14,8 +16,9 @@ displayRegions(regions) {
 render() {
 	var regions = this.props.regions;
 	return (
-		<div>
-		{this.displayRegions(regions)}	
+		<div align="left">
+			{this.displayRegions(regions)}	
+			<br> </br>
 		</div>
 	);
 }
