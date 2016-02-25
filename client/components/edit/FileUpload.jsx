@@ -24,12 +24,12 @@ fetchUploadedFile() {
 render() {
 	return (
 		<div className="text-center">
-		 <input id="uploadFile" placeholder="Choose File" disabled="disabled" ref="textInput"/>
-  		 <div className="fileUpload btn btn-primary">
+			<input id="uploadFile" placeholder="Choose File" disabled="disabled" ref="textInput"/>
+  		<div className="fileUpload btn btn-primary">
     		<span>Upload your audio</span>
     		<input id="uploadBtn" type="file" ref="fileUpload" onChange={this.fetchUploadedFile} className="upload" accept="audio/*"/>
-   		 </div>
-    	</div>
+   		</div>
+    </div>
 	);
 }
 
