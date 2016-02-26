@@ -23,7 +23,8 @@ Edit = React.createClass({
     return (
       <div className="edit">
         <h1>Stories HQ</h1>
-        <p>Craft your podcasts</p>
+        <p>Edit & Publish your podcast</p>
+        <AccountsUIWrapper />
         <br></br>
         <div className="text-center">
           <input id="uploadFile" placeholder="Choose File" disabled="disabled" ref="textInput"/>
