@@ -9,16 +9,16 @@ Login = React.createClass({
   loginClicked(event) {
     event.preventDefault();
 
-    var username = ReactDOM.findDOMNode(this.refs.username).value.trim();
+    var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
     var password = ReactDOM.findDOMNode(this.refs.password).value.trim();
 
     var _this = this;
-    Meteor.loginWithPassword(username, password, function(err) {
+    Meteor.loginWithPassword(email, password, function(err) {
       if(!err) {
         FlowRouter.go("/");
       } else {
         _this.setState({
-          error: "Username/Password didn't match"});
+          error: "Email/Password didn't match"});
       }
     })
   },
@@ -29,7 +29,7 @@ Login = React.createClass({
       <p>Login to create your podcast</p>
       <br></br>
       <form className="login-form" onSubmit={this.loginClicked}>
-        <p><input type="text" ref="username" placeholder="Username" /></p>
+        <p><input type="text" ref="email" placeholder="Email" /></p>
         <p><input type="password" ref="password" placeholder="Password" /></p>
         <p><input type="submit" value="Login"/></p>
         {this.state.error}

@@ -4,14 +4,14 @@ AccountsUIWrapper = React.createClass({
     event.preventDefault();
 
     Meteor.logout(function(err) {
-      FlowRouter.go("/logout");
+      FlowRouter.go("/login");
     })
   },
 
   render() {
     return <div>
-      {Meteor.user().username}
-      <p><input type="submit" value="Logout" onClick={this.logoutClicked}/></p>
+      {Meteor.user().profile.name}
+      <input type="submit" value="Logout" onClick={this.logoutClicked}/>
     </div>
   }
 });
