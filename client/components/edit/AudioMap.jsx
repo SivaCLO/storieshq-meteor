@@ -9,9 +9,13 @@ getInitialState() {
 	};
 },
 
-populateRegions(wavesurfer) {
-	var peaks = wavesurfer.backend.getPeaks(20000);
-	var duration = wavesurfer.getDuration();
+extractParams() {
+	this.audioElem = this.props.audioElem;	
+},
+
+populateRegions() {
+	var peaks = this.audioElem.wavesurfer.backend.getPeaks(20000);
+	var duration = this.audioElem.wavesurfer.getDuration();
 	// Silence params
     var minValue = 0.015;
     var minSeconds = 0.25;
@@ -81,17 +85,43 @@ populateRegions(wavesurfer) {
     });
 
     // Fetch time-based spoken regions
-    var spokenTsRegions = fRegions.map(function (reg) {   	
+    var spokenTsRegions = fRegions.map(function (reg, index) {   	
     	var startTime = Math.round(reg.start * coef * 10) / 10;
     	var endTime = Math.round(reg.end * coef * 10) / 10;
         return {
             start: startTime,
             end: endTime,
-            width : (endTime - startTime) * 30 
+            width : (endTime - startTime) * 30 ,
+            position: index
         };
     });
     
+    spokenTsRegions = spokenTsRegions.map(function (reg, index) {  
+    	var nextRegion;
+    	if ( index == spokenTsRegions.length ) nextRegion = undefined;
+    	else nextRegion = spokenTsRegions[index + 1];
+    	
+    	if ( index == 0 ) prevRegion = undefined;
+    	else prevRegion = spokenTsRegions[index - 1]; 	
+        return {
+            start: reg.start,
+            end: reg.end,
+            width : reg.width,
+            next : nextRegion,
+            prev : prevRegion,
+            position: reg.position
+        };
+    });
+    
+    this.loadRegions(spokenTsRegions);
+    this.audioElem.wavesurfer.nextRegion = spokenTsRegions[0];
     this.spokenRegions = spokenTsRegions;
+},
+
+loadRegions(spokenRegions) {
+	for ( var i = 0; i < spokenRegions.length; i++ ) {
+		this.audioElem.wavesurfer.addRegion(spokenRegions[i]);
+	}
 },
 
 splitRegionsByLineWidth(lineWidth) {
@@ -139,7 +169,7 @@ splitRegionsByLineWidth(lineWidth) {
 				start : regionStart, 
 				end : regionEnd,
 				width : remWidth,
-				silent : region.silent 
+				silent : region.silent
 			});
 			curWidth += remWidth;
 			
@@ -155,30 +185,52 @@ splitRegionsByLineWidth(lineWidth) {
 displayRegionsForLine(splitRegions) {
 	return splitRegions.map((splitRegion) => {
 		return <RegionLine regions = {splitRegion}
-						   ws = {this.props.ws}
+						   audioElem = {this.audioElem}
 			   />;
 		});
 },
 
 play() {
-	this.props.ws.play();
+	this.audioElem.play();
 },
 
 pause() {
-	this.props.ws.pause();
+	this.audioElem.wavesurfer.pause();
 },
 
 stop() {
-	this.props.ws.seekTo(0);
-	this.props.ws.pause();
+	this.audioElem.stop();
+},
+
+prev() {
+	var previousRegion = this.audioElem.wavesurfer.prevRegion;
+	var index = previousRegion.position;
+	this.audioElem.seekTo(previousRegion.start, this.spokenRegions[index - 1], this.spokenRegions[index + 1]);
+},
+
+next() {
+	var nextRegion = this.audioElem.wavesurfer.nextRegion;
+	var index = nextRegion.position;
+	this.audioElem.seekTo(nextRegion.start, this.spokenRegions[index - 1], this.spokenRegions[index + 1]);
 },
 
 render() {	
-	this.populateRegions(this.props.ws);
-	var splitRegions = this.splitRegionsByLineWidth(1296);
+	this.extractParams();
+	this.populateRegions();
+	var lineWidth = screen.width * 0.9;
+	var splitRegions = this.splitRegionsByLineWidth(lineWidth);
+	
+	this.audioElem.bindEvents();
+	var animStyle = {
+            position : 'relative',
+            left :'0px',
+            top : '50px',
+            color : 'red'
+        };
 	return (
 		<div className="audioMap">	
 			<br> </br>
+			  <div id="progressBar" className="glyphicon glyphicon-music" style={animStyle}/>
 			<p className="text-center"> <b> Spoken Regions </b> </p>
 			{this.displayRegionsForLine(splitRegions)}
 			
@@ -193,6 +245,14 @@ render() {
 			
 			<button onClick={this.stop} className="btn btn-primary playPause">
 			<span> Stop </span>
+			</button>
+			
+			<button onClick={this.prev} className="btn btn-primary playPause">
+			<span> Prev </span>
+			</button>
+			
+			<button onClick={this.next} className="btn btn-primary playPause">
+			<span> Next </span>
 			</button>
 			</div>
 		</div>
