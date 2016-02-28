@@ -39,4 +39,11 @@ body {
 .playPause {
 	margin : 10px;
 }
+
+#loading {
+  border-radius: 5px;
+  position: relative;
+  top : 50px;
+}
+
 }

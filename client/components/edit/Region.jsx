@@ -3,28 +3,27 @@
 Region = React.createClass({
 
 playRegion() {
-	this.props.ws.play(this.props.startTime, this.props.endTime);
-	this.props.ws.backend.seekTo(this.props.startTime);
+	this.props.audioElem.playRegion(this.region.start, this.region.end);
 },
 
 seekToRegion() {
-	this.props.ws.backend.seekTo(this.props.startTime);
-	this.props.ws.pause();
+	this.props.audioElem.seekTo(this.region.start, this.region.prev, this.region.next);
 },
 
 render() {
-	var regionId = "region-" + this.props.startTime + "-" + this.props.endTime;
+	this.region = this.props.region;
+	var regionId = "region-" + this.region.start + "-" + this.region.end;
 	var bgColor = 'blue';
-	if (this.props.silent) {
+	if (this.region.silent) {
 		bgColor = 'lightblue';
 	}
-	var blockWidth = this.props.width + 'px';
+	var blockWidth = this.region.width + 'px';
 	var blockStyle = {
             width: blockWidth,
             backgroundColor: bgColor
         };
 	return (
-		<div id={regionId} className="region" onClick={this.seekToRegion} onDoubleClick={this.playRegion} style={blockStyle}>
+		<div id={regionId} className="region" onClick={this.seekToRegion} style={blockStyle}>
 		</div>
 	);
 }
