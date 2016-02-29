@@ -11,8 +11,8 @@ Header = React.createClass({
   render() {
     return <div>
       <h1>Stories HQ</h1>
-      {Meteor.user().profile.name}
-      <input type="submit" value="Logout" onClick={this.logoutClicked}/>
+      {Meteor.user() ? Meteor.user().profile.name : ""}
+      {Meteor.user() ? <input type="submit" value="Logout" onClick={this.logoutClicked}/> : ""}
     </div>
   }
 });
