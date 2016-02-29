@@ -6,10 +6,8 @@ Record = React.createClass({
 
   render() {
     return <div className="record">
-      <h1>Stories HQ</h1>
+      <Header />
       <p>Setup & Record your podcast</p>
-      <AccountsUIWrapper />
-      <br></br>
       <button onClick={this.edit} className="btn btn-primary">Edit this Podcast</button>
     </div>
   }

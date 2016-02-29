@@ -41,10 +41,8 @@ showLoader() {
   render() {
     return (
       <div className="edit">
-        <h1 className="text-center">Stories HQ</h1>
+        <Header />
         <p className="text-center">Edit & Publish your podcast</p>
-        <AccountsUIWrapper />
-        <br></br>
         <div className="text-center">
           <input id="uploadFile" placeholder="Choose File" disabled="disabled" ref="textInput"/>
           <div className="fileUpload btn btn-primary">

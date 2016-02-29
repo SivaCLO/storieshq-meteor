@@ -1,4 +1,4 @@
-AccountsUIWrapper = React.createClass({
+Header = React.createClass({
 
   logoutClicked(event) {
     event.preventDefault();
@@ -10,6 +10,7 @@ AccountsUIWrapper = React.createClass({
 
   render() {
     return <div>
+      <h1>Stories HQ</h1>
       {Meteor.user().profile.name}
       <input type="submit" value="Logout" onClick={this.logoutClicked}/>
     </div>
