@@ -2,7 +2,7 @@ Home = React.createClass({
 
   mixins: [ReactMeteorData],
 
-  record() {
+  setup() {
 
     Meteor.call("createPodcast", function(error, result) {
       if (error) {
@@ -31,7 +31,7 @@ Home = React.createClass({
     return <div className="home">
       <Header />
       <br></br>
-      <button onClick={this.record} className="btn btn-primary">New Podcast</button>
+      <button onClick={this.setup} className="btn btn-primary">New Podcast</button>
       <br></br><br></br>
       <p>Here are your podcasts</p>
       {this.renderPodcasts()}

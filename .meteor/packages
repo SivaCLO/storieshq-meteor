@@ -21,3 +21,4 @@ kadira:flow-router
 kadira:react-layout
 accounts-password
 meteorhacks:fast-render
+peerlibrary:aws-sdk

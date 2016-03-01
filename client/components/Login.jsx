@@ -17,8 +17,7 @@ Login = React.createClass({
       if(!err) {
         FlowRouter.go("/");
       } else {
-        _this.setState({
-          error: "Email/Password didn't match"});
+        _this.setState({error: "Email/Password didn't match"});
       }
     })
   },
