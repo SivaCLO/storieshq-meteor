@@ -1,12 +1,12 @@
-Setup = React.createClass({
+Result = React.createClass({
   propTypes: {
     podcastId: React.PropTypes.string.isRequired
   },
 
   mixins: [ReactMeteorData],
 
-  edit() {
-    FlowRouter.go('/' + this.props.podcastId + '/edit');
+  home() {
+    FlowRouter.go('/');
   },
 
   getMeteorData() {
@@ -44,20 +44,18 @@ Setup = React.createClass({
   // },
 
   render() {
-    return <div className="setup">
+    return <div className="result">
       <Header />
       <br></br>
       <br></br>
-      <p>Setup & Record your podcast</p>
-      <div>Title : </div>
-      <div><input type="text" ref="title" placeholder="Enter title" defaultValue={this.data.podcast && this.data.podcast.title ? this.data.podcast.title : ""}></input></div>
-      <div>Notes : </div>
-      <div><textarea ref="notes" placeholder="Enter notes" defaultValue={this.data.podcast && this.data.podcast.notes ? this.data.podcast.notes : ""}></textarea></div>
-      <input type="submit" value="Save" onClick={this.save}></input>
-        <br></br>
-        <br></br>
-      <button className="btn btn-primary">Start Recording</button>
-      <button onClick={this.edit} className="btn btn-primary">Edit & Publish</button>
+      <Title podcastId={this.props.podcastId}/>
+
+      <p>It's time to Share!</p>
+      <button className="btn btn-primary">Twitter</button>
+      <button className="btn btn-primary">Facebook</button>
+      <br></br>
+      <br></br>
+      <button onClick={this.home} className="btn btn-primary">Back to My Podcasts</button>
     </div>
   }
 });

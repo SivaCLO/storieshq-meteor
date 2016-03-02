@@ -17,12 +17,19 @@ Home = React.createClass({
 
   getMeteorData() {
     return {
-      podcasts: Podcasts.find({}, {sort: {createdAt: -1}}).fetch(),
+      inProgressPodcasts: Podcasts.find({state: { $ne: 99}}, {sort: {createdAt: -1}}).fetch(),
+      publishedPodcasts: Podcasts.find({state: 99}, {sort: {createdAt: -1}}).fetch(),
     };
   },
 
-  renderPodcasts() {
-    return this.data.podcasts.map((podcast) => {
+  renderInProgressPodcasts() {
+    return this.data.inProgressPodcasts.map((podcast) => {
+      return <Podcast key={podcast._id} podcast={podcast} />;
+    });
+  },
+
+  renderPublishedPodcasts() {
+    return this.data.publishedPodcasts.map((podcast) => {
       return <Podcast key={podcast._id} podcast={podcast} />;
     });
   },
@@ -31,10 +38,17 @@ Home = React.createClass({
     return <div className="home">
       <Header />
       <br></br>
+      <br></br>
+
       <button onClick={this.setup} className="btn btn-primary">New Podcast</button>
       <br></br><br></br>
       <p>Here are your podcasts</p>
-      {this.renderPodcasts()}
+      <h4>In Progress</h4>
+      {this.renderInProgressPodcasts()}
+      <br></br>
+      <br></br>
+      <h4>Published</h4>
+      {this.renderPublishedPodcasts()}
 
     </div>
   }

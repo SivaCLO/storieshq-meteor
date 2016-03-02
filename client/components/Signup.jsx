@@ -42,6 +42,9 @@ Signup = React.createClass({
   render() {
     return <div className="signup">
       <Header />
+      <br></br>
+      <br></br>
+
       <p>Signup to create your podcast</p>
       <form className="signup-form" onSubmit={this.signupClicked}>
         <p><input type="text" ref="name" placeholder="Name" /></p>

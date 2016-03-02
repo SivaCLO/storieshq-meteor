@@ -1,5 +1,3 @@
-Meteor.subscribe("podcasts");
-
 AWS.config.update({
     accessKeyId: "AKIAI55ZTRZWXJMFVAJQ",
     secretAccessKey: "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",
