@@ -46,15 +46,13 @@ Result = React.createClass({
   render() {
     return <div className="result">
       <Header podcastId={this.props.podcastId}/>
-      <br></br>
-      <br></br>
+      <div className="text-center">
+        <h2>It's time to Share!</h2>
+        <button className="btn btn-primary">Twitter</button>
+        <button className="btn btn-primary">Facebook</button>
 
-      <p>It's time to Share!</p>
-      <button className="btn btn-primary">Twitter</button>
-      <button className="btn btn-primary">Facebook</button>
-      <br></br>
-      <br></br>
-      <button onClick={this.home} className="btn btn-primary">Back to My Podcasts</button>
+        <p><button onClick={this.home} className="btn btn-primary">Done</button></p>
+      </div>
     </div>
   }
 });

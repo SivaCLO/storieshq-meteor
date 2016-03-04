@@ -24,13 +24,16 @@ Login = React.createClass({
 
   render() {
     return <div className="login">
-      <Header headerText="Login to create your podcast"/>
-      <form className="login-form" onSubmit={this.loginClicked}>
-        <p><input type="text" ref="email" placeholder="Email" /></p>
-        <p><input type="password" ref="password" placeholder="Password" /></p>
-        <p><input type="submit" value="Login"/></p>
-        {this.state.error}
-      </form>
+      <Header />
+      <div className="text-center">
+        <h2>Login to create your podcast</h2>
+        <form className="login-form" onSubmit={this.loginClicked}>
+          <p><input type="text" ref="email" placeholder="Email" /></p>
+          <p><input type="password" ref="password" placeholder="Password" /></p>
+          <p><input type="submit" value="Login"/></p>
+          {this.state.error}
+        </form>
+      </div>
     </div>
   }
 });

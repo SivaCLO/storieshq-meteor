@@ -61,6 +61,26 @@ Header = React.createClass({
     FlowRouter.go("/");
   },
 
+  podcastHome() {
+    FlowRouter.go("/" + this.props.podcastId);
+  },
+
+  script() {
+    FlowRouter.go("/" + this.props.podcastId + "/script");
+  },
+
+  record() {
+    FlowRouter.go("/" + this.props.podcastId + "/record");
+  },
+
+  edit() {
+    FlowRouter.go("/" + this.props.podcastId + "/edit");
+  },
+
+  publish() {
+    FlowRouter.go("/" + this.props.podcastId + "/publish");
+  },
+
   render() {
 
     return <div className="header">
@@ -69,20 +89,27 @@ Header = React.createClass({
         <div className="container-fluid">
           <div className="navbar-header">
             <a className="navbar-brand" href="" onClick={this.home}>
-              StoriesHQ
+              <img className="stories-logo" src="/img/transparent.png" />
             </a>
           </div>
           <div className="collapse navbar-collapse">
             {this.props.headerText ?
             <ul className="nav navbar-nav">
               <li><a href=""></a></li>
-              <li className="navbar-text">{this.props.headerText}</li>
+              <li className="navbar-brand">{this.props.headerText}</li>
             </ul>
             : ""}
             {this.data && this.data.podcast ?
             <ul className="nav navbar-nav">
               <li><a href=""></a></li>
-              <li ref={(ref) => this._modalTrigger = ref} className="navbar-text editable" data-toggle="modal" data-target="#myModal">{this.data.podcast.title ? this.data.podcast.title : "Untitled"} <i className="fa fa-pencil"></i></li>
+              <li className="navbar-brand">
+                <p>
+                  <a className="podcastName" href="" onClick={this.podcastHome}>{this.data.podcast.title ? this.data.podcast.title : "Untitled"}</a>
+                  &nbsp;<a href="" ref={(ref) => this._modalTrigger = ref} data-toggle="modal" data-target="#myModal">
+                    <i className="fa fa-pencil"></i>
+                  </a>
+                </p>
+              </li>
             </ul>
             : ""}
             {Meteor.user() ?
@@ -99,26 +126,41 @@ Header = React.createClass({
         </div>
       </nav>
 
-      <div id="myModal" ref={(ref) => this._modal = ref} className="modal fade" role="dialog">
-        <div className="modal-dialog">
+      {this.data && this.data.podcast ?
 
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal">&times;</button>
-              <h4 className="modal-title">Edit Title</h4>
-            </div>
-            <div className="modal-body">
-              <input type="text" ref="title" placeholder="Untitled" defaultValue={this.data.podcast && this.data.podcast.title ? this.data.podcast.title : ""}></input>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="button" className="btn btn-default" data-dismiss="modal" onClick={this.saveTitle}>Save</button>
+        <div>
+
+          <div className="text-center">
+            <div className="actions btn-group" role="group" aria-label="...">
+                <button type="button" className="btn btn-lg btn-warning action" onClick={this.script}><i className="fa fa-file-text-o"></i>&nbsp;Script</button>
+                <button type="button" className="btn btn-lg btn-danger action" onClick={this.record}><i className="fa fa-microphone"></i>&nbsp;Record</button>
+                <button type="button" className="btn btn-lg btn-success action" onClick={this.edit}><i className="fa fa-headphones"></i>&nbsp;Edit</button>
+                <button type="button" className="btn btn-lg btn-primary action" onClick={this.publish}><i className="fa fa-bullhorn"></i>&nbsp;Publish</button>
             </div>
           </div>
 
-        </div>
-      </div>
+          <div id="myModal" ref={(ref) => this._modal = ref} className="modal fade" role="dialog">
+            <div className="modal-dialog">
 
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                  <h4 className="modal-title">Edit Title</h4>
+                </div>
+                <div className="modal-body">
+                  <input type="text" ref="title" placeholder="Untitled" defaultValue={this.data.podcast && this.data.podcast.title ? this.data.podcast.title : ""}></input>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" className="btn btn-default" data-dismiss="modal" onClick={this.saveTitle}>Save</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      : ""}
 
     </div>
   }

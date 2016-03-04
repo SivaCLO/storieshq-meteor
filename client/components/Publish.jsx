@@ -6,7 +6,7 @@ Publish = React.createClass({
   mixins: [ReactMeteorData],
 
   done() {
-    Meteor.call("setState", this.props.podcastId, 99, function(error, result) {
+    Meteor.call("setPublished", this.props.podcastId, true, function(error, result) {
       if (error) {
         alert(error.reason);
       }
@@ -51,18 +51,14 @@ Publish = React.createClass({
   render() {
     return <div className="publish">
       <Header podcastId={this.props.podcastId}/>
-      <br></br>
-      <br></br>
-
-      <h3>Publish</h3>
-      <div>Title : </div>
-      <div><input type="text" ref="title" placeholder="Enter title" defaultValue={this.data.podcast && this.data.podcast.title ? this.data.podcast.title : ""}></input></div>
-      <div>Notes : </div>
-      <div><textarea ref="notes" placeholder="Enter notes" defaultValue={this.data.podcast && this.data.podcast.notes ? this.data.podcast.notes : ""}></textarea></div>
-      <input type="submit" value="Save" onClick={this.save}></input>
-        <br></br>
-        <br></br>
-      <button onClick={this.done} className="btn btn-primary">Done</button>
+      <div className="text-center">
+      <h2>Publish</h2>
+        <div>Title : </div>
+        <div><input type="text" ref="title" placeholder="Enter title" defaultValue={this.data.podcast && this.data.podcast.title ? this.data.podcast.title : ""}></input></div>
+        <div>Notes : </div>
+        <div><textarea ref="notes" placeholder="Enter notes" defaultValue={this.data.podcast && this.data.podcast.notes ? this.data.podcast.notes : ""}></textarea></div>
+        <button onClick={this.done} className="btn btn-primary">Publish to SoundCloud</button>
+      </div>
     </div>
   }
 });

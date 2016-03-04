@@ -1,8 +1,6 @@
 Edit = React.createClass({
 
-  fetchUploadedFile() {
-  	var uploadedFile = React.findDOMNode(this.refs.fileUpload).value;
-  	React.findDOMNode(this.refs.textInput).value = uploadedFile;
+  componentDidMount() {
 
   	var wavesurfer = Object.create(WaveSurfer);
   	wavesurfer.init({
@@ -14,7 +12,7 @@ Edit = React.createClass({
           minimap: true,
           backend: 'WebAudio'
       });
-    wavesurfer.load('/DegreeOfSeparation.mp3');
+    wavesurfer.load('https://s3.amazonaws.com/stories-files/7JNjgRy42tsQJS2xG.mp3');
     var audioElem = ReactDOM.render(< AudioElement/>, document.getElementById("audioMap"));
     audioElem.init(wavesurfer);
 
@@ -26,11 +24,6 @@ Edit = React.createClass({
   },
 
   publish() {
-    Meteor.call("setState", this.props.podcastId, 3, function(error, result) {
-      if (error) {
-        alert(error.reason);
-      }
-    });
     ReactLayout.render(Publish, {podcastId: this.props.podcastId});
   },
 
@@ -48,23 +41,14 @@ showLoader() {
 },
 
   render() {
-    return (
-      <div className="edit">
-        <Header podcastId={this.props.podcastId}/>
-        <br></br>
-        <br></br>
-
-        <h3>Edit</h3>
-        <button onClick={this.publish} className="btn btn-primary">I'm done Editing. Start Publishing</button>
-        <div className="text-center">
-          <input id="uploadFile" placeholder="Choose File" disabled="disabled" ref="textInput"/>
-          <div className="fileUpload btn btn-primary">
-            <span>Upload your audio</span>
-            <input id="uploadBtn" type="file" ref="fileUpload" onChange={this.fetchUploadedFile} className="upload" accept="audio/*"/>
-          </div>
-        </div>
+    return <div className="edit">
+      <Header podcastId={this.props.podcastId}/>
+      <div className="text-center">
+        <h2>Edit</h2>
         <div id="audioMap"></div>
+        <button onClick={this.publish} className="btn btn-success">I'm done Editing. Start Publishing</button>
       </div>
-    );
+    </div>
+
   }
 });

@@ -6,11 +6,6 @@ Record = React.createClass({
   mixins: [ReactMeteorData],
 
   edit() {
-    Meteor.call("setState", this.props.podcastId, 2, function(error, result) {
-      if (error) {
-        alert(error.reason);
-      }
-    });
     ReactLayout.render(Edit, {podcastId: this.props.podcastId});
   },
 
@@ -51,14 +46,13 @@ Record = React.createClass({
   render() {
     return <div className="record">
       <Header podcastId={this.props.podcastId}/>
-      <br></br>
-      <br></br>
-
-      <h3>Record</h3>
-      <button className="btn btn-primary">Start Recording</button>
-      <br></br>
-      <br></br>
-      <button onClick={this.edit} className="btn btn-primary">I'm done Recording. Start Editing</button>
+      <div className="text-center">
+        <h2>Record</h2>
+        <button className="btn btn-default">Start Recording</button>
+        <br></br>
+        <br></br>
+        <button onClick={this.edit} className="btn btn-danger">I'm done Recording. Start Editing</button>
+      </div>
     </div>
   }
 });

@@ -1,9 +1,10 @@
 Wait = React.createClass({
   render() {
-    return <div className="wait">
+    return <div className="join">
       <Header />
-      <p>Join the podcast</p>
-      <h1>Hello, {this.props.name}</h1>
+      <div className="text-center">
+        <h2>Waiting for the host to join the podcast</h2>
+      </div>
     </div>
   }
 });
