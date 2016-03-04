@@ -45,10 +45,9 @@ Result = React.createClass({
 
   render() {
     return <div className="result">
-      <Header />
+      <Header podcastId={this.props.podcastId}/>
       <br></br>
       <br></br>
-      <Title podcastId={this.props.podcastId}/>
 
       <p>It's time to Share!</p>
       <button className="btn btn-primary">Twitter</button>

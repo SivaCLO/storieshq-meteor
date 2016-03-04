@@ -50,10 +50,9 @@ Record = React.createClass({
 
   render() {
     return <div className="record">
-      <Header />
+      <Header podcastId={this.props.podcastId}/>
       <br></br>
       <br></br>
-      <Title podcastId={this.props.podcastId}/>
 
       <h3>Record</h3>
       <button className="btn btn-primary">Start Recording</button>

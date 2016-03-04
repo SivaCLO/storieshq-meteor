@@ -22,3 +22,5 @@ kadira:react-layout
 accounts-password
 meteorhacks:fast-render
 peerlibrary:aws-sdk
+twbs:bootstrap
+fortawesome:fontawesome

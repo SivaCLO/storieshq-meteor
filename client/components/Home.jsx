@@ -36,18 +36,16 @@ Home = React.createClass({
 
   render() {
     return <div className="home">
-      <Header />
+      <Header headerText="My Podcasts"/>
       <br></br>
       <br></br>
 
       <button onClick={this.setup} className="btn btn-primary">New Podcast</button>
       <br></br><br></br>
-      <p>Here are your podcasts</p>
-      <h4>In Progress</h4>
       {this.renderInProgressPodcasts()}
       <br></br>
       <br></br>
-      <h4>Published</h4>
+      <h4>Archives</h4>
       {this.renderPublishedPodcasts()}
 
     </div>

@@ -50,10 +50,9 @@ Publish = React.createClass({
 
   render() {
     return <div className="publish">
-      <Header />
+      <Header podcastId={this.props.podcastId}/>
       <br></br>
       <br></br>
-      <Title podcastId={this.props.podcastId}/>
 
       <h3>Publish</h3>
       <div>Title : </div>

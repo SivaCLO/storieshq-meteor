@@ -50,10 +50,9 @@ showLoader() {
   render() {
     return (
       <div className="edit">
-        <Header />
+        <Header podcastId={this.props.podcastId}/>
         <br></br>
         <br></br>
-        <Title podcastId={this.props.podcastId}/>
 
         <h3>Edit</h3>
         <button onClick={this.publish} className="btn btn-primary">I'm done Editing. Start Publishing</button>
