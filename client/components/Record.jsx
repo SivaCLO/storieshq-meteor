@@ -6,13 +6,19 @@ Record = React.createClass({
   mixins: [ReactMeteorData],
 
   edit() {
-    ReactLayout.render(Edit, {podcastId: this.props.podcastId});
+    FlowRouter.go("/" + this.props.podcastId + "/edit");
   },
 
   getMeteorData() {
     return {
       podcast: Podcasts.findOne({_id: this.props.podcastId}),
     };
+  },
+
+  componentWillMount() {
+    if(!this.data.podcast) {
+      FlowRouter.go('/');
+    }
   },
 
   save() {

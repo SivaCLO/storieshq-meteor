@@ -5,14 +5,20 @@ Start = React.createClass({
 
   mixins: [ReactMeteorData],
 
-  record() {
-    ReactLayout.render(Record, {podcastId: this.props.podcastId});
+  script() {
+    FlowRouter.go("/" + this.props.podcastId + "/script");
   },
 
   getMeteorData() {
     return {
       podcast: Podcasts.findOne({_id: this.props.podcastId}),
     };
+  },
+
+  componentWillMount() {
+    if(!this.data.podcast) {
+      FlowRouter.go('/');
+    }
   },
 
   componentDidMount() {

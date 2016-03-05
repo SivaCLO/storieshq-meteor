@@ -24,7 +24,7 @@ Header = React.createClass({
     FlowRouter.go("/");
   },
 
-  podcastHome() {
+  start() {
     FlowRouter.go("/" + this.props.podcastId);
   },
 
@@ -80,7 +80,7 @@ Header = React.createClass({
       {this.data && this.data.podcast ?
           <div className="text-center">
             <div className="actions btn-group" role="group" aria-label="...">
-                <button type="button" className="btn btn-lg btn-default plain" onClick={this.podcastHome}><i className="fa fa-th-large"></i></button>
+                <button type="button" className="btn btn-lg btn-default plain" onClick={this.start}><i className="fa fa-th-large"></i></button>
                 <button type="button" className="btn btn-lg btn-default plain action" onClick={this.script}><i className="fa fa-file-text-o text-warning"></i>&nbsp;Script</button>
                 <button type="button" className="btn btn-lg btn-default plain action" onClick={this.record}><i className="fa fa-microphone text-danger"></i>&nbsp;Record</button>
                 <button type="button" className="btn btn-lg btn-default plain action" onClick={this.edit}><i className="fa fa-headphones text-success"></i>&nbsp;Edit</button>

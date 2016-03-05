@@ -11,13 +11,19 @@ Publish = React.createClass({
         alert(error.reason);
       }
     });
-    ReactLayout.render(Result, {podcastId: this.props.podcastId});
+    FlowRouter.go("/" + this.props.podcastId + "/result");
   },
 
   getMeteorData() {
     return {
       podcast: Podcasts.findOne({_id: this.props.podcastId}),
     };
+  },
+
+  componentWillMount() {
+    if(!this.data.podcast) {
+      FlowRouter.go('/');
+    }
   },
 
   save() {

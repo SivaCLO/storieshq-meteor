@@ -12,6 +12,12 @@ Edit = React.createClass({
     };
   },
 
+  componentWillMount() {
+    if(!this.data.podcast) {
+      FlowRouter.go('/');
+    }
+  },
+
   componentDidMount() {
   	var wavesurfer = Object.create(WaveSurfer);
   	wavesurfer.init({
@@ -35,7 +41,7 @@ Edit = React.createClass({
   },
 
   publish() {
-    ReactLayout.render(Publish, {podcastId: this.props.podcastId});
+    FlowRouter.go("/" + this.props.podcastId + "/publish");
   },
 
 showLoader() {
