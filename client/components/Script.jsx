@@ -26,7 +26,7 @@ Script = React.createClass({
 
   render() {
     return <div className="script">
-      <Header podcastId={this.props.podcastId}/>
+      <Header podcastId={this.props.podcastId} headerText={this.data.podcast.title ? this.data.podcast.title : "Untitled"}/>
       <div className="text-center">
         <h2>Script</h2>
         <div><textarea onChange={this.save} ref="notes" placeholder="Write down Script, Agenda, Ideas, Questions,..." defaultValue={this.data.podcast && this.data.podcast.notes ? this.data.podcast.notes : ""}></textarea></div>

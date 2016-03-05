@@ -50,7 +50,7 @@ Publish = React.createClass({
 
   render() {
     return <div className="publish">
-      <Header podcastId={this.props.podcastId}/>
+      <Header podcastId={this.props.podcastId} headerText={this.data.podcast.title ? this.data.podcast.title : "Untitled"}/>
       <div className="text-center">
       <h2>Publish</h2>
         <div>Title : </div>

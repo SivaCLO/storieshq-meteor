@@ -45,7 +45,7 @@ Result = React.createClass({
 
   render() {
     return <div className="result">
-      <Header podcastId={this.props.podcastId}/>
+      <Header podcastId={this.props.podcastId} headerText={this.data.podcast.title ? this.data.podcast.title : "Untitled"}/>
       <div className="text-center">
         <h2>It's time to Share!</h2>
         <button className="btn btn-primary">Twitter</button>

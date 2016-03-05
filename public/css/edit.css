@@ -1,3 +1,7 @@
+body {
+	background-color: #f6f6f6;
+}
+
 .audioMap {
 	margin : 0 auto;
 	width : 90%;
@@ -28,22 +32,28 @@
 }
 
 .podcastName {
-  text-decoration: underline;
 }
 
 .navbar {
 	margin-bottom: 0;
 	border-radius: 0;
+	background-color: #f6f6f6;
 }
 
 .actions {
 	margin-bottom: 20px;
 }
 
-.btn {
-	border-radius: 0;
+.action {
+	width: 150px;
 }
 
-.action {
-	width: 130px;
+.plain {
+	border: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.editIcon {
+	font-size: large;
 }

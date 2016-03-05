@@ -1,7 +1,18 @@
 Edit = React.createClass({
 
-  componentDidMount() {
+  propTypes: {
+    podcastId: React.PropTypes.string.isRequired
+  },
 
+  mixins: [ReactMeteorData],
+
+  getMeteorData() {
+    return {
+      podcast: Podcasts.findOne({_id: this.props.podcastId}),
+    };
+  },
+
+  componentDidMount() {
   	var wavesurfer = Object.create(WaveSurfer);
   	wavesurfer.init({
           container: '#audioMap',
@@ -42,7 +53,7 @@ showLoader() {
 
   render() {
     return <div className="edit">
-      <Header podcastId={this.props.podcastId}/>
+      <Header podcastId={this.props.podcastId} headerText={this.data.podcast.title ? this.data.podcast.title : "Untitled"}/>
       <div className="text-center">
         <h2>Edit</h2>
         <div id="audioMap"></div>
