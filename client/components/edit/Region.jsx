@@ -10,21 +10,28 @@ seekToRegion() {
 	this.props.audioElem.seekTo(this.region.start, this.region.prev, this.region.next);
 },
 
+componentDidMount() {
+	var regionId = this.regionId;
+    
+    var canvas = document.getElementById(this.regionId);
+    var ctx = canvas.getContext("2d");
+    if (this.region.silent) {
+    	ctx.fillStyle = "#F6F6F6";
+    } else {
+    	ctx.fillStyle = "blue";
+    }
+	
+	ctx.fillRect(0, 0, this.region.width, 20);
+	
+},
+
 render() {
 	this.region = this.props.region;
-	var regionId = "region-" + this.region.start + "-" + this.region.end;
-	var bgColor = 'blue';
-	if (this.region.silent) {
-		bgColor = 'lightblue';
-	}
-	var blockWidth = this.region.width + 'px';
-	var blockStyle = {
-            width: blockWidth,
-            backgroundColor: bgColor
-        };
+	this.regionId = "region-" + this.region.start + "-" + this.region.end;
+	
 	return (
-		<div id={regionId} className="region" onClick={this.seekToRegion} style={blockStyle}>
-		</div>
+		<canvas id={this.regionId} ref={this.regionId} height="20" width={this.region.width} onClick={this.seekToRegion}>
+		</canvas>
 	);
 }
 
