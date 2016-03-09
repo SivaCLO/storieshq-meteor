@@ -10,118 +10,10 @@ getInitialState() {
 },
 
 extractParams() {
-	this.audioElem = this.props.audioElem;	
-},
-
-populateRegions() {
-	var peaks = this.audioElem.wavesurfer.backend.getPeaks(20000);
-	var duration = this.audioElem.wavesurfer.getDuration();
-	// Silence params
-    var minValue = 0.015;
-    var minSeconds = 0.25;
-
-    var length = peaks.length;
-    var coef = duration / length;
-    var minLen = minSeconds / coef;
-
-    // Gather silence indeces
-    var silences = [];
-    Array.prototype.forEach.call(peaks, function (val, index) {
-        if (Math.abs(val) <= minValue) {
-            silences.push(index);
-        }
-    });
-
-    // Cluster silence values
-    var clusters = [];
-    silences.forEach(function (val, index) {
-        if (clusters.length && val == silences[index - 1] + 1) {
-            clusters[clusters.length - 1].push(val);
-        } else {
-            clusters.push([ val ]);
-        }
-    });
-
-    // Filter silence clusters by minimum length
-    var fClusters = clusters.filter(function (cluster) {
-        return cluster.length >= minLen;
-    });
-	
-	// Fetch time-based silent regions
-	var silentTsRegions = fClusters.map(function(cluster, index) {
-		var startTime = Math.round(cluster[0] * coef * 10) / 10;
-    	var endTime = Math.round(cluster[cluster.length - 1] * coef * 10) / 10;
-		return {
-			start : startTime,
-			end : endTime,
-			width : (endTime - startTime) * 30 ,
-			silent : true
-		};
-	});
-	
-	this.silentRegions = silentTsRegions;
-	
-    // Create spoken regions on the edges of silences
-    var regions = fClusters.map(function (cluster, index) {
-        var next = fClusters[index + 1];
-        return {
-            start: cluster[cluster.length - 1],
-            end: (next ? next[0] : length - 1)
-        };
-    });
-
-    // Add an initial region if the audio doesn't start with silence
-    var firstCluster = fClusters[0];
-    if (firstCluster && firstCluster[0] != 0) {
-        regions.unshift({
-            start: 0,
-            end: firstCluster[firstCluster.length - 1]
-        });
-    }
-
-    // Filter regions by minimum length
-    var fRegions = regions.filter(function (reg) {
-        return reg.end - reg.start >= minLen;
-    });
-
-    // Fetch time-based spoken regions
-    var spokenTsRegions = fRegions.map(function (reg, index) {   	
-    	var startTime = Math.round(reg.start * coef * 10) / 10;
-    	var endTime = Math.round(reg.end * coef * 10) / 10;
-        return {
-            start: startTime,
-            end: endTime,
-            width : (endTime - startTime) * 30 ,
-            position: index
-        };
-    });
-    
-    spokenTsRegions = spokenTsRegions.map(function (reg, index) {  
-    	var nextRegion;
-    	if ( index == spokenTsRegions.length ) nextRegion = undefined;
-    	else nextRegion = spokenTsRegions[index + 1];
-    	
-    	if ( index == 0 ) prevRegion = undefined;
-    	else prevRegion = spokenTsRegions[index - 1]; 	
-        return {
-            start: reg.start,
-            end: reg.end,
-            width : reg.width,
-            next : nextRegion,
-            prev : prevRegion,
-            position: reg.position
-        };
-    });
-    
-    this.loadRegions(spokenTsRegions);
-    this.audioElem.wavesurfer.nextRegion = spokenTsRegions[0];
-    this.spokenRegions = spokenTsRegions;
-},
-
-loadRegions(spokenRegions) {
-	for ( var i = 0; i < spokenRegions.length; i++ ) {
-		this.audioElem.wavesurfer.addRegion(spokenRegions[i]);
-	}
+	this.audioElem = this.props.audioElem;
+	this.spokenRegions = this.audioElem.spokenRegions;
+	this.silentRegions = this.audioElem.silentRegions;	
+	this.version = this.props.version;
 },
 
 splitRegionsByLineWidth(lineWidth) {
@@ -214,9 +106,24 @@ next() {
 	this.audioElem.seekTo(nextRegion.start, this.spokenRegions[index - 1], this.spokenRegions[index + 1]);
 },
 
+delete() {
+	var startTime = 5;
+	var endTime = 10;
+	var my = this;
+	
+	this.audioElem.showLoader();
+	Meteor.call("delete", "7JNjgRy42tsQJS2xG", this.version, startTime, endTime, function(error,nextVersion) {
+		if(error) {
+			console.log(error.reason);
+		} else {
+			my.setState({ version: nextVersion });
+			my.audioElem.loadWavesurfer("7JNjgRy42tsQJS2xG", nextVersion);
+		}
+	});
+},
+
 render() {	
 	this.extractParams();
-	this.populateRegions();
 	var lineWidth = screen.width * 0.9;
 	var splitRegions = this.splitRegionsByLineWidth(lineWidth);
 	
@@ -253,6 +160,10 @@ render() {
 			
 			<button onClick={this.next} className="btn btn-primary playPause">
 			<span> Next </span>
+			</button>
+			
+			<button onClick={this.delete} className="btn btn-primary playPause">
+			<span> Delete </span>
 			</button>
 			</div>
 		</div>
